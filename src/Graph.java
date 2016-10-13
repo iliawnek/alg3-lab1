@@ -84,6 +84,27 @@ public class Graph {
 //                }
 //            }
 //        }
+
+        for (int i = 0; i < numVertices; i++) vertices[i].setVisited(false);
+        LinkedList<Vertex> queue = new LinkedList<>();
+        for (Vertex v : vertices) {
+            if (!v.getVisited()) {
+                v.setVisited(true);
+                v.setPredecessor(v.getIndex());
+                queue.addLast(v);
+                while (!queue.isEmpty()) {
+                    Vertex u = queue.removeFirst();
+                    for (AdjListNode adjacentNode : u.getAdjList()) {
+                        Vertex w = vertices[adjacentNode.getVertexNumber()];
+                        if (!w.getVisited()) {
+                            w.setVisited(true);
+                            w.setPredecessor(u.getIndex());
+                            queue.addLast(w);
+                        }
+                    }
+                }
+            }
+        }
     }
 
 }
